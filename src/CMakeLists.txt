@@ -1,5 +1,6 @@
 set(ALL_TARGETS
     argparse
+    cli11
     clipp
 )
 
@@ -12,4 +13,5 @@ foreach(target ${ALL_TARGETS})
 endforeach()
 
 target_link_libraries(argparse PRIVATE argparse::argparse fmt::fmt spdlog::spdlog spdlog::spdlog_header_only)
+target_link_libraries(cli11 PRIVATE CLI11::CLI11 fmt::fmt spdlog::spdlog spdlog::spdlog_header_only)
 target_link_libraries(clipp PRIVATE clipp::clipp fmt::fmt spdlog::spdlog spdlog::spdlog_header_only)

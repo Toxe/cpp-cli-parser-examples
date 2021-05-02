@@ -17,7 +17,8 @@ include(cmake/Sanitizers.cmake)
 
 find_package(fmt CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
-find_package(clipp CONFIG REQUIRED)
 find_package(argparse CONFIG REQUIRED)
+find_package(CLI11 CONFIG REQUIRED)
+find_package(clipp CONFIG REQUIRED)
 
 add_subdirectory(src)
