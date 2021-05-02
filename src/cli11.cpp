@@ -25,8 +25,7 @@ auto eval_args(int argc, char* argv[])
 {
     const auto progname{std::filesystem::path{argv[0]}.filename().string()};
     const auto description = "CLI Parser Example (CLI11)";
-    bool log_level_verbose = false;
-    bool log_level_debug = false;
+    int log_level_flag = 0;
     int seed = -1;
     int zoom = 1;
     int width, height;
@@ -48,8 +47,7 @@ auto eval_args(int argc, char* argv[])
     app.add_option("-s,--seed", seed, "random seed (0 or bigger)");
     app.add_option("-z,--zoom", zoom, "pixel zoom factor for .raw files", true);
     app.add_flag("-i,--info", info, "output additional info");
-    app.add_flag("-v,--verbose", log_level_verbose, "show info log messages (verbose)");
-    app.add_flag("--debug", log_level_debug, "show debug log messages (very verbose)");
+    app.add_flag("-v", log_level_flag, "log level (-v: verbose, -vv: debug messages)");
 
     auto grp_output = app.add_option_group("output format (default: text)");
     const auto f1 = grp_output->add_flag("-t,--text", format_text, "text: uses ASCII '#' characters for walls");
@@ -68,9 +66,9 @@ auto eval_args(int argc, char* argv[])
         show_usage_and_exit(app, nullptr, error);
     }
 
-    auto log_level = (log_level_verbose) ? spdlog::level::info : spdlog::level::warn;
+    auto log_level = (log_level_flag >= 1) ? spdlog::level::info : spdlog::level::warn;
 
-    if (log_level_debug)
+    if (log_level_flag >= 2)
         log_level = spdlog::level::debug;
 
     spdlog::set_level(log_level);
