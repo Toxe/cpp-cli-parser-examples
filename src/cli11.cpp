@@ -86,6 +86,9 @@ auto eval_args(int argc, char* argv[])
     spdlog::debug("command line option --multi: {}", run_multi);
     spdlog::debug("command line option --all: {}", run_all);
 
+    if (!run_all && !run_single && !run_multi)
+        run_all = true;
+
     if (run_all) {
         run_single = true;
         run_multi = true;
