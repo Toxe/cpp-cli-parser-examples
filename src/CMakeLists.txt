@@ -1,8 +1,11 @@
 set(ALL_TARGETS
     argparse
     cli11
-    clipp
 )
+
+if(NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    set(ALL_TARGETS ${ALL_TARGETS} clipp)
+endif()
 
 foreach(target ${ALL_TARGETS})
     add_executable(${target} ${target}.cpp)
@@ -14,4 +17,7 @@ endforeach()
 
 target_link_libraries(argparse PRIVATE argparse::argparse fmt::fmt spdlog::spdlog spdlog::spdlog_header_only)
 target_link_libraries(cli11 PRIVATE CLI11::CLI11 fmt::fmt spdlog::spdlog spdlog::spdlog_header_only)
-target_link_libraries(clipp PRIVATE clipp::clipp fmt::fmt spdlog::spdlog spdlog::spdlog_header_only)
+
+if(NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    target_link_libraries(clipp PRIVATE clipp::clipp fmt::fmt spdlog::spdlog spdlog::spdlog_header_only)
+endif()

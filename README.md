@@ -8,6 +8,8 @@ A quick repository to check out and compare a couple of C++ CLI arguments parser
 - [argparse](https://github.com/p-ranav/argparse)
 - [CLI11](https://github.com/CLIUtils/CLI11)
 
+Note: At the moment clipp does not compile with C++20 and MSVC.
+
 ### clipp
 
 ```
