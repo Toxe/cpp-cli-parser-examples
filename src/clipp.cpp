@@ -38,7 +38,8 @@ auto eval_args(int argc, char* argv[])
 
     auto cli = (
         clipp::option("-h", "--help").set(show_help)                          % "show help",
-        clipp::option("-v", "--verbose").set(log_level, spdlog::level::debug) % "show verbose output",
+        (clipp::option("-v", "--verbose").set(log_level, spdlog::level::info) % "show info log messages (verbose)" |
+         clipp::option("-vv", "--debug").set(log_level, spdlog::level::debug) % "show debug log messages (very verbose)"),
         (clipp::option("-t", "--text").set(output_format, OutputFormat::Text)     |
          clipp::option("-p", "--pretty").set(output_format, OutputFormat::Pretty) |
          clipp::option("-d", "--data").set(output_format, OutputFormat::Data)     |
