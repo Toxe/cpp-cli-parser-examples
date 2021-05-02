@@ -1,6 +1,6 @@
 # C++ CLI Arguments Parser Examples
 
-A quick repository to check out and compare a couple of C++ CLI arguments parser libraries.
+A quick repository to check out and compare a couple of C++ CLI arguments parser libraries. Note that these are example programs and the command line flags and options might not make sense on their own.
 
 ## Libraries
 
