@@ -1,5 +1,5 @@
 {
     "name": "cpp-cli-parser-examples",
     "version": "0.0.1",
-    "dependencies": ["clipp", "cli11", "argparse"]
+    "dependencies": ["fmt", "spdlog", "clipp", "cli11", "argparse"]
 }
