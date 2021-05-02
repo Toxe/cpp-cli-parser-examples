@@ -33,6 +33,9 @@ auto eval_args(int argc, char* argv[])
     int zoom = 1;
     int width, height;
     bool info = false;
+    bool run_single = false;
+    bool run_multi = false;
+    bool run_all = true;
     OutputFormat output_format = OutputFormat::Text;
     std::string filename;
 
@@ -49,7 +52,10 @@ auto eval_args(int argc, char* argv[])
         clipp::option("-i", "--info").set(info)                               % "output additional info",
         clipp::integer("width", width)                                        % "maze width",
         clipp::integer("height", height)                                      % "maze height",
-        clipp::opt_value("filename", filename)                                % "output filename"
+        clipp::opt_value("filename", filename)                                % "output filename",
+        (clipp::option("--single").set(run_single).set(run_all, false)        % "run test: single inserts for every row",
+         clipp::option("--multi").set(run_multi).set(run_all, false)          % "run test: insert multiple rows in one request") |
+         clipp::option("--all").set(run_all)                                  % "run all tests (default)"
     );
 
     if (!clipp::parse(argc, argv, cli))
@@ -66,8 +72,16 @@ auto eval_args(int argc, char* argv[])
     spdlog::debug("command line option --seed: {}", seed);
     spdlog::debug("command line option --zoom: {}", zoom);
     spdlog::debug("command line option --info: {}", info);
+    spdlog::debug("command line option --single: {}", run_single);
+    spdlog::debug("command line option --multi: {}", run_multi);
+    spdlog::debug("command line option --all: {}", run_all);
 
-    if (show_help)
+    if (run_all) {
+        run_single = true;
+        run_multi = true;
+    }
+
+    if (show_help || !(run_single || run_multi))
         show_usage_and_exit(cli, progname, description, example);
 
     if (width < 1 || height < 1)
@@ -76,12 +90,16 @@ auto eval_args(int argc, char* argv[])
     if (zoom < 1)
         zoom = 1;
 
-    return std::make_tuple(seed, width, height, filename, output_format, zoom, info);
+    return std::make_tuple(seed, width, height, filename, output_format, zoom, info, run_single, run_multi);
 }
 
 int main(int argc, char* argv[])
 {
-    auto [seed, width, height, filename, output_format, zoom, info] = eval_args(argc, argv);
+    auto [seed, width, height, filename, output_format, zoom, info, run_single, run_multi] = eval_args(argc, argv);
 
-    spdlog::info("let's do something...");
+    if (run_single)
+        spdlog::info("run single test...");
+
+    if (run_multi)
+        spdlog::info("run multi test...");
 }
