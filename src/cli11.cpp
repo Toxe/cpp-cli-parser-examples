@@ -8,7 +8,6 @@
 #include <CLI/Config.hpp>
 #include <CLI/Formatter.hpp>
 #include <fmt/core.h>
-#include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
 enum class OutputFormat { Text, Raw, Pretty, Data };
